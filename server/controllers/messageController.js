@@ -4,7 +4,7 @@ const messageController = {};
 
 messageController.createMessage = async (req, res, next) => {
   try {
-    res.locals.mesasge = await Message.create({
+    res.locals.message = await Message.create({
       text: req.body.text,
       username: req.user.username,
     });

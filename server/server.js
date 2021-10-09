@@ -37,6 +37,11 @@ app.get('/', (req, res) => {
   res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
 
+// serve login page
+app.get('/login', (req, res) => {
+  res.status(200).sendFile(path.resolve(__dirname, '../client/login.html'));
+});
+
 // 404 handler
 app.use((req, res) =>
   res.status(404).send("This is not the page you're looking for...")

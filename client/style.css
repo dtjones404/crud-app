@@ -1,5 +1,6 @@
 body {
   background-color: lavender;
+  height: 100%;
 }
 
 #title {
@@ -41,4 +42,25 @@ body {
 
 img {
   margin: auto;
+}
+
+#login {
+  background-color: rgb(241, 241, 250);
+  padding: 3em;
+  border: 2px outset;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 30%;
+  margin: 30% auto;
+}
+
+#login > * {
+  margin: 0.3em;
+}
+
+#logoutButton {
+  display: flex;
+  justify-content: center;
 }

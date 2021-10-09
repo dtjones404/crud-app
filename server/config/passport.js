@@ -1,4 +1,5 @@
 const passport = require('passport');
+const LocalStrategy = require('passport-local');
 const GoogleStrategy = require('passport-google-oauth20');
 const User = require('../models/User');
 
@@ -23,6 +24,22 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
+// define passport's first-party password strategy
+passport.use(
+  new LocalStrategy(async (username, password, done) => {
+    try {
+      const user = await User.findOne({ username });
+      if (!user || !(await user.verifyPassword(password))) {
+        return done(null, false);
+      }
+      return done(null, user);
+    } catch (err) {
+      console.log(err);
+      return done(err);
+    }
+  })
+);
+
 // define passport's google oauth strategy
 passport.use(
   new GoogleStrategy(
@@ -44,7 +61,6 @@ passport.use(
           // create new user in db using details
           username = username || `${firstname} ${lastname}`;
           user = await User.create({ googleId, username });
-          console.log(user);
         }
         return done(null, user);
       } catch (err) {

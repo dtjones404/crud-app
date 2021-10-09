@@ -1,9 +1,18 @@
 const path = require('path');
 const router = require('express').Router();
 const passport = require('passport');
+const userController = require('../controllers/userController');
 
-router.get('/login', (req, res) => {
-  res.status(200).sendFile(path.resolve(__dirname, '../../client/login.html'));
+router.post(
+  '/login',
+  passport.authenticate('local', { failureRedirect: '/login' }),
+  (req, res) => {
+    res.status(200).json({ msg: 'login successful' });
+  }
+);
+
+router.post('/signup', userController.createUser, (req, res) => {
+  res.status(200).json({ msg: 'signup successful' });
 });
 
 router.get(
@@ -20,5 +29,10 @@ router.get(
     res.redirect('/');
   }
 );
+
+router.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/login');
+});
 
 module.exports = router;
